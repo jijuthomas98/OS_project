@@ -2,56 +2,55 @@
 #include<conio.h>
 	
 int main() {
-	int process,resource,i,j,instance,total=0, k=0,c1=0,c2=0; 
+	int p,r,i,j,ins,t=0, k=0,c1=0,c2=0; 
 	/*c1, c2 and k are used for counting purpose*/
 	
-	printf("\n*Enter No. of Process: ");
-	scanf("%d",&process); //Entering No. of Processes
-	printf("*Enter No. of Resources: ");
-	scanf("%d",&resource); //Entering No. of Resources
+	printf("\nNo. of Process: ");
+	scanf("%d",&p); //Entering No. of Processes
+	printf("*No. of Resources: ");
+	scanf("%d",&r); //Entering No. of Resources
 	
-	int instances[resource], avail[resource], max[process][resource],allot[process][resource],
-	need[process][resource],completed[process]; //Declaring the necessary matrices
+	int ins[r], avail[r], max[p][r],allot[p][r],need[p][r],comp[p]; //Declaring the necessary matrices
 	
-	for(i=0;i<process;i++)
-		completed[i]=0; //Setting Flag for uncompleted Processes
+	for(i=0;i<p;i++)
+		comp[i]=0; //Setting Flag for uncompleted Processes
 	
-	printf("\n*Enter No. of Instances per Resource type: \n");
-		for(i=0;i<resource;i++) {
+	printf("\n*Enter Instances : \n");
+		for(i=0;i<r;i++) {
 			printf("%c: ",(i+65));
 		    scanf("%d",&instance);
 		    instances[i]=instance; //Storing instancesable instancees
 		} 
 	
-	printf("\n*Enter Maximum No. of Resource type Instances for each:\n");
-		for(i=0;i<process;i++) {
+	printf("\n*Enter Maximum Resource :\n");
+		for(i=0;i<p;i++) {
 			printf("\nFor P%d: \n",i);
-			for(j=0;j<resource;j++) {
+			for(j=0;j<r;j++) {
 				printf("%c: ",(j+65));
-		        scanf("%d",&instance);
-		        max[i][j]=instance;               
+		        scanf("%d",&ins);
+		        max[i][j]=ins;               
 		    } 
 		}  
 		   
-	printf("\n*Enter No. of Resource type Instances allocated to each process:\n"); 
-		for(i=0;i<process;i++) {
+	printf("\n*Enter No. of resource allocated to every process:\n"); 
+		for(i=0;i<p;i++) {
 			printf("\nFor P%d: \n",i);
-			for(j=0;j<resource;j++) {
+			for(j=0;j<r;j++) {
 				printf("%c: ",(j+65));
-		    	scanf("%d",&instance);
-		        allot[i][j]=instance;
+		    	scanf("%d",&ins);
+		        allot[i][j]=ins;
 				
 		        need[i][j]=max[i][j]-allot[i][j]; //Calculating the Need of each process
 		    }  
 		} 
 	
-	//Calculating the Available Instances for each Resource type	
-		for(j=0;j<resource;j++) {
+	//Calculating the Available Instances for each r type	
+		for(j=0;j<r;j++) {
 		total=0;
-			for(i=0;i<process;i++) {
+			for(i=0;i<p;i++) {
 				total+= allot[i][j];
 		    }  
-			avail[j]=instances[j]-total;
+			avail[j]=ins[j]-total;
 			printf("R%d : %d\n",j,avail[j]);
 		}
 	
@@ -60,16 +59,16 @@ int main() {
 	    while(c1!=process) {
 	    	c2 = c1;
 	    	for(i=0;i<process;i++) {
-	       		for(j=0;j<resource;j++) {
+	       		for(j=0;j<r;j++) {
 	            	if(need[i][j]<=avail[j]) // Checking if Need can be fulfilled
 	                	k++;  
 	        	}     
-	        	if(k==resource && completed[i]==0 ) {
+	        	if(k==r && completed[i]==0 ) {
 	           		printf("P%d ",i);
 	           		completed[i]=1; // Setting flag for completed Process
 	
-	           		for(j=0;j<resource;j++) {
-	            		avail[j]=avail[j]+allot[i][j]; //Updating instancesable Resources
+	           		for(j=0;j<r;j++) {
+	            		avail[j]=avail[j]+allot[i][j]; //Updating instancesable rs
 	            	}  
 	            	c1++;
 	         	}
