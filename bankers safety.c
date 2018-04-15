@@ -10,7 +10,7 @@ int main() {
 	printf("*No. of Resources: ");
 	scanf("%d",&r); //Entering No. of Resources
 	
-	int ins[r], avail[r], max[p][r],allot[p][r],need[p][r],comp[p]; //Declaring the necessary matrices
+	int instances[r], avail[r], max[p][r],allot[p][r],need[p][r],comp[p]; //Declaring the necessary matrices
 	
 	for(i=0;i<p;i++)
 		comp[i]=0; //Setting Flag for uncompleted Processes
@@ -18,8 +18,8 @@ int main() {
 	printf("\n*Enter Instances : \n");
 		for(i=0;i<r;i++) {
 			printf("%c: ",(i+65));
-		    scanf("%d",&instance);
-		    instances[i]=instance; //Storing instancesable instancees
+		    scanf("%d",&ins);
+		    instances[i]=ins; //Storing instancesable instancees
 		} 
 	
 	printf("\n*Enter Maximum Resource :\n");
@@ -32,7 +32,7 @@ int main() {
 		    } 
 		}  
 		   
-	printf("\n*Enter No. of resource allocated to every process:\n"); 
+	printf("\n*Enter  resource for every process:\n"); 
 		for(i=0;i<p;i++) {
 			printf("\nFor P%d: \n",i);
 			for(j=0;j<r;j++) {
@@ -46,26 +46,26 @@ int main() {
 	
 	//Calculating the Available Instances for each r type	
 		for(j=0;j<r;j++) {
-		total=0;
+		t=0;
 			for(i=0;i<p;i++) {
-				total+= allot[i][j];
+				t+= allot[i][j];
 		    }  
-			avail[j]=ins[j]-total;
+			avail[j]=instances[j]-t;
 			printf("R%d : %d\n",j,avail[j]);
 		}
 	
 	
 	printf("The System is in a Safe State\n***** Safe Sequence is: < ");
-	    while(c1!=process) {
+	    while(c1!=p) {
 	    	c2 = c1;
-	    	for(i=0;i<process;i++) {
+	    	for(i=0;i<p;i++) {
 	       		for(j=0;j<r;j++) {
 	            	if(need[i][j]<=avail[j]) // Checking if Need can be fulfilled
 	                	k++;  
 	        	}     
-	        	if(k==r && completed[i]==0 ) {
+	        	if(k==r && comp[i]==0 ) {
 	           		printf("P%d ",i);
-	           		completed[i]=1; // Setting flag for completed Process
+	           		comp[i]=1; // Setting flag for completed Process
 	
 	           		for(j=0;j<r;j++) {
 	            		avail[j]=avail[j]+allot[i][j]; //Updating instancesable rs
